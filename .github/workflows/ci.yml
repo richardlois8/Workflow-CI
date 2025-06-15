@@ -8,8 +8,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  train:
+  build:
     runs-on: ubuntu-latest
+
+    env:
+      MLFLOW_TRACKING_URI     : https://dagshub.com/richardlois1/SML_Modelling.mlflow/
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
 
     steps:
     - name: Checkout repo
