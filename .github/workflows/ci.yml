@@ -29,6 +29,7 @@ jobs:
 
     - name: Run MLflow Project
       shell: bash -l {0}
+      working-directory: ..
       run: |
         mlflow run . -P data_path=mobile_price_classification_preprocessing.csv
 
