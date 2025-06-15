@@ -29,7 +29,6 @@ jobs:
 
     - name: Run MLflow Project
       shell: bash -l {0}
-      working-directory: MLProject
       run: |
         mlflow run . -P data_path=mobile_price_classification_preprocessing.csv
 
@@ -37,7 +36,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: trained-model
+        name: mobile-price-class-model
         path: MLProject/mlruns/
 
     - name: Build Docker image with MLflow
