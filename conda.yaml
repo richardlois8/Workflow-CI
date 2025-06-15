@@ -1,0 +1,12 @@
+name: mlfow-env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - mlflow==2.12.2
+      - scikit-learn
+      - pandas
+      - joblib

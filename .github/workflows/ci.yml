@@ -1,0 +1,58 @@
+name: MLflow Project CI
+
+on:
+  push:
+    paths:
+      - 'MLProject/**'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Set up Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: mlfow-env
+        environment-file: MLProject/conda.yaml
+        python-version: 3.12
+
+    - name: Install MLflow CLI
+      shell: bash -l {0}
+      run: |
+        pip install mlflow==2.12.2
+
+    - name: Run MLflow Project
+      shell: bash -l {0}
+      working-directory: MLProject
+      run: |
+        mlflow run . -P data_path=mobile_price_classification_preprocessing.csv
+
+    - name: Upload model artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: trained-model
+        path: MLProject/mlruns/
+
+    - name: Build Docker image with MLflow
+      shell: bash -l {0}
+      working-directory: MLProject
+      run: |
+        mlflow models build-docker -m ./mlruns/0/last_run_id/artifacts/random_forest_model -n random-forest-model:latest
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push Docker image
+      run: |
+        docker tag random-forest-model:latest ${{ secrets.DOCKERHUB_USERNAME }}/random-forest-model:latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/random-forest-model:latest
