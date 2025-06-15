@@ -19,7 +19,7 @@ jobs:
       uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: mlfow-env
-        environment-file: conda.yaml
+        environment-file: MLProject/conda.yaml
         python-version: 3.12
 
     - name: Install MLflow CLI
