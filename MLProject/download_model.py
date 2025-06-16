@@ -1,7 +1,7 @@
 import mlflow, os
 
 EXPERIMENT_NAME = "Default"
-MODEL_NAME = "random_forest_model"
+MODEL_NAME = "model"
 TRACKING_URI = "https://dagshub.com/richardlois1/SML_Modelling.mlflow/"
 
 mlflow.set_tracking_uri(TRACKING_URI)
