@@ -31,7 +31,7 @@ jobs:
       with:
         activate-environment: mlfow-env
         environment-file: MLProject/conda.yaml
-        python-version: 3.10
+        python-version: 3.10.*
 
     - name: Install MLflow CLI
       shell: bash -l {0}
