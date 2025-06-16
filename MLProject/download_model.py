@@ -1,4 +1,4 @@
-import mlflow
+import mlflow, os
 
 EXPERIMENT_NAME = "Default"
 MODEL_NAME = "random_forest_model"
@@ -12,5 +12,6 @@ runs = client.search_runs([experiment.experiment_id], order_by=["start_time DESC
 run_id = runs[0].info.run_id
 
 print("Latest run ID:", run_id)
+os.makedirs("downloaded_model", exist_ok=True)
 client.download_artifacts(run_id, MODEL_NAME, "downloaded_model")
 print("Model downloaded to: downloaded_model/")
