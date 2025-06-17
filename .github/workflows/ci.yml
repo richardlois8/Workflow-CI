@@ -66,15 +66,15 @@ jobs:
     - name: Patch Dockerfile to use python3.10
       working-directory: MLProject
       run: |
-        ls -l MLProject
-        sed -i 's/python3.8/python3.10/g' Dockerfile
-        sed -i 's/python3.8-distutils/python3.10-distutils/g' Dockerfile
-        sed -i 's/python \/tmp\/get-pip.py/python3.10 \/tmp\/get-pip.py/g' Dockerfile
+        sed -i 's/python3.8/python3.10/g' mlflow-dockerfile/Dockerfile
+        sed -i 's/python3.8-distutils/python3.10-distutils/g' mlflow-dockerfile/Dockerfile
+        sed -i 's/python \/tmp\/get-pip.py/python3.10 \/tmp\/get-pip.py/g' mlflow-dockerfile/Dockerfile
 
     - name: Build Docker image
       working-directory: MLProject
-      run: |
-        docker build -t random-forest-model:latest -f downloaded_model/model/Dockerfile downloaded_model/model
+      run: 
+        docker build -t random-forest-model:latest -f mlflow-dockerfile/Dockerfile mlflow-dockerfile
+
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3
