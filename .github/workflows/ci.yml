@@ -66,6 +66,7 @@ jobs:
     - name: Patch Dockerfile to use python3.10
       working-directory: MLProject
       run: |
+        ls -l MLProject
         sed -i 's/python3.8/python3.10/g' Dockerfile
         sed -i 's/python3.8-distutils/python3.10-distutils/g' Dockerfile
         sed -i 's/python \/tmp\/get-pip.py/python3.10 \/tmp\/get-pip.py/g' Dockerfile
